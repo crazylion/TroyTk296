@@ -4,12 +4,19 @@
 TroyMotor::TroyMotor(int pin){
   pinMode(pin,OUTPUT);
   _pin=pin;
-  isRunning=false;
+  _status=0;
   _currentStep=0;
 }
 
 void TroyMotor::goToStep(int stepCount){
     _goToSTep=stepCount;
+}
+
+void TroyMotor::setStatus(int status){
+  _status=status;  
+}
+int TroyMotor::getStatus(){
+  return _status;
 }
 
 void TroyMotor::singleRun(){

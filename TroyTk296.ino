@@ -14,5 +14,5 @@ motorManager.add(new TroyMotor(13));
 void loop(){
   Serial.println("loop");
 //motor.singleRun();
-motorManager.loopForever();
+motorManager.run();
 }

@@ -8,13 +8,17 @@ public:
   void high();
   void low();
   void singleRun();
-    void goToStep(int);
+  void goToStep(int);
+  int getStatus();
+  void setStatus(int);
 private:
   int _pin,_currentStep,_goToSTep;
-  boolean isRunning;
+  int _status; // 0-> stop // 1->running
+
 
 
 };
 #endif
+
 
 

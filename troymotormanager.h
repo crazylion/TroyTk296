@@ -6,12 +6,15 @@ class TroyMotorManager{
   public:
      TroyMotorManager(int);
      void add(TroyMotor*);
-     void run(int,int);
-     void loopForever();
+     void goToStep(int,int);
+     void loopForever(); // for testing
+     void run();  // main loop
   private:
     TroyMotor** _motors;
     int _motorCount;
     int _motorPtr;
+    int* _motorStatus;
+    int _delay;
 
 };
 #endif
