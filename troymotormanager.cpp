@@ -4,8 +4,9 @@ TroyMotorManager::TroyMotorManager(int motorCount){
   _motors = new TroyMotor*[motorCount];
   _motorCount=motorCount;
   _motorPtr=-1;
-  _delay=40;
+  _interval=40;
   _motorStatus = new int[motorCount];
+  prevMillis=0;
 }
 void TroyMotorManager::add(TroyMotor* motor){
   _motorPtr++;
@@ -18,23 +19,17 @@ void TroyMotorManager::add(TroyMotor* motor){
 }
 
 void TroyMotorManager::run(){
-  for(int i=0;i<=_motorPtr;i++){
-    if( _motors[i]->getStatus()==1){
-      _motors[i]->low();
+
+  unsigned long currentMillis = millis();
+  if(currentMillis - prevMillis > _interval) {
+    prevMillis = currentMillis;
+    for(int i=0;i<=_motorPtr;i++){
+      if( _motors[i]->getStatus()==1){
+        _motors[i]->run();
+      }
     }
   }
-  delay(_delay);
-  for(int i=0;i<=_motorPtr;i++){
-    if( _motors[i]->getStatus()==1){
-      _motors[i]->high();
-    }
-  }
-  delay(_delay);
-  for(int i=0;i<=_motorPtr;i++){
-    if( _motors[i]->getStatus()==1){
-      _motors[i]->low();
-    }
-  }
+
 }
 
 void TroyMotorManager::goToStep(int index,int step){
@@ -45,21 +40,12 @@ void TroyMotorManager::goToStep(int index,int step){
 
 void TroyMotorManager::loopForever(){
   for(int i=0;i<=_motorPtr;i++){
-    Serial.println("high");
-    _motors[i]->low();
-
-  }
-  delay(_delay);
-  for(int i=0;i<=_motorPtr;i++){
-    _motors[i]->high();
+    _motors[i]->setStatus(1);
+     _motors[i]->run();
   }
 
-  delay(_delay);
-  for(int i=0;i<=_motorPtr;i++){
-    Serial.println("high");
-    _motors[i]->low();
-
-  }
 
 }
+
+
 

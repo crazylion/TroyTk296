@@ -6,6 +6,7 @@ TroyMotor::TroyMotor(int pin){
   _pin=pin;
   _status=0;
   _currentStep=0;
+  _position=false;
 }
 
 void TroyMotor::goToStep(int stepCount){
@@ -24,6 +25,16 @@ void TroyMotor::singleRun(){
   delay(50);
   low();
   Serial.println("singleRun");
+}
+void TroyMotor::run(){
+  if(_position){
+    digitalWrite(_pin,LOW);
+    _position=false;
+
+  }else{
+    digitalWrite(_pin,HIGH);
+    _position=true;
+  }
 }
 
 void TroyMotor::high(){

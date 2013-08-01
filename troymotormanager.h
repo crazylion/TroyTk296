@@ -14,7 +14,8 @@ class TroyMotorManager{
     int _motorCount;
     int _motorPtr;
     int* _motorStatus;
-    int _delay;
+     unsigned long prevMillis;
+     int _interval;
 
 };
 #endif
