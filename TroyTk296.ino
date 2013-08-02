@@ -37,16 +37,17 @@ void runMotor(){
   int motorIndex=-1;
   int motorStep=0;
   motorIndex =atol(indexChar);
-   stepChar = sCmd.next();
-    if (stepChar == NULL) {
-      Serial.println("miss step value");
-      return;
-    }
-    motorStep =atol(stepChar);
-    motorManager.goToStep(motorIndex,motorStep);
-char ret[100];
-sprintf(ret,"motor %s go to Step %s",indexChar,stepChar);
-    Serial.println(ret);
+  stepChar = sCmd.next();
+  if (stepChar == NULL) {
+    Serial.println("miss step value");
+    return;
+  }
+  motorStep =atol(stepChar);
+  motorManager.goToStep(motorIndex,motorStep);
+  char ret[100];
+//  sprintf(ret,"motor %s go to Step %s",indexChar,stepChar);
+  sprintf(ret,"motor %d go to Step %d",motorIndex,motorStep);
+  Serial.println(ret);
 
 
 }
@@ -55,4 +56,5 @@ sprintf(ret,"motor %s go to Step %s",indexChar,stepChar);
 void unrecognized(const char *command) {
   Serial.println("What?");
 }
+
 
