@@ -51,8 +51,11 @@ void TroyMotorManager::loopForever(){
     _motors[i]->setStatus(1);
      _motors[i]->run();
   }
+}
 
-
+void TroyMotorManager::reset(int index){
+ _motors[index]->reset();
+ _motors[index]->setStatus(1);
 }
 
 

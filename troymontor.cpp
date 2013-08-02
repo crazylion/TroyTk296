@@ -8,11 +8,11 @@ TroyMotor::TroyMotor(int pin){
   _currentStep=0;
   _position=false;
   _counter=0;
-  _isReset=false;
+  _isReset=true;
 }
 
 void TroyMotor::goToStep(int stepCount){
-    _goToStep=stepCount;
+  _goToStep=stepCount;
 }
 
 void TroyMotor::setStatus(int status){
@@ -28,7 +28,8 @@ void TroyMotor::singleRun(){
   low();
   Serial.println("singleRun");
 }
-void TroyMotor::run(){
+
+void TroyMotor::step(){
   if(_counter==3){
     _currentStep++;
     _counter=0;
@@ -40,19 +41,33 @@ void TroyMotor::run(){
     return;
   }
   char ret[100];
-  #ifdef __DEBUG__
+#ifdef __DEBUG__
   sprintf(ret,"currentStep:%d,gotostep:%d",_currentStep,_goToStep);
-  #endif
   Serial.println(ret);
+#endif
+
   if(_position){
     digitalWrite(_pin,LOW);
     _position=false;
     _counter++;
-  }else{
+  }
+  else{
     digitalWrite(_pin,HIGH);
     _position=true;
     _counter++;
   }
+}
+
+void TroyMotor::run(){
+  if(_isReset){
+    step();
+  }
+  else{
+
+    reseting();
+  }
+
+
 }
 
 void TroyMotor::high(){
@@ -61,3 +76,26 @@ void TroyMotor::high(){
 void TroyMotor::low(){
   digitalWrite(_pin,LOW);
 }
+void TroyMotor::reseting(){
+  int val = analogRead(5);
+  Serial.println(val);  
+  if(val==0){
+    _isReset=true;
+    _currentStep=0;
+    _position=false;
+    _counter=0;
+    _status=0;
+  }
+  else{
+    step();
+  }
+}
+
+void TroyMotor::reset(){
+  _isReset=false;
+  _status=1;
+  _goToStep=3000; // give   hung steps
+}
+
+
+

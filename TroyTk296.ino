@@ -12,11 +12,13 @@ void setup(){
   sCmd.addCommand("h",help);
   sCmd.addCommand("run",runMotor);
   sCmd.addCommand("interval",setInterval);
+  sCmd.addCommand("reset",resetMotor);
   sCmd.setDefaultHandler(unrecognized); 
   motorManager.add(new TroyMotor(13));
   //motorManager.add(new TroyMotor(12));
   //motorManager.add(new TroyMotor(11));
   //motorManager.add(new TroyMotor(13));
+  pinMode(5,INPUT);
   Serial.println("Welcome to the TroyTk296 commander !!");
 }
 
@@ -24,6 +26,7 @@ void loop(){
   sCmd.readSerial();  
   //motor.singleRun();
   motorManager.run();
+
 }
 
 void help(){
@@ -50,6 +53,13 @@ void runMotor(){
   sprintf(str,"motor %d go to Step %d",motorIndex,motorStep);
   Serial.println(str);
 
+}
+
+void resetMotor(){
+  char *indexChar;
+  indexChar = sCmd.next();
+  motorManager.reset(atol(indexChar));
+  Serial.println("reset Motor");
 }
 
 void setInterval(){

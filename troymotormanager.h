@@ -9,7 +9,7 @@ class TroyMotorManager{
      void goToStep(int,int);
      void loopForever(); // for testing
      void run();  // main loop
-     void reset();
+     void reset(int);
      void interval(int); //set up interval
      int getInterval();
   private:
@@ -20,6 +20,7 @@ class TroyMotorManager{
      unsigned long prevMillis;
      int _interval;
      boolean _isReset; // 1=>true,0=>false
+     
 
 };
 #endif
