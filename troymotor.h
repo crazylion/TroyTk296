@@ -17,6 +17,7 @@ private:
   int _status; // 0-> stop // 1->running
   boolean _position; //false=>LOW  , false=>HIGH
   int _counter;
+  boolean _isReset;
 
 
 

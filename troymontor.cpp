@@ -8,6 +8,7 @@ TroyMotor::TroyMotor(int pin){
   _currentStep=0;
   _position=false;
   _counter=0;
+  _isReset=false;
 }
 
 void TroyMotor::goToStep(int stepCount){
@@ -39,7 +40,9 @@ void TroyMotor::run(){
     return;
   }
   char ret[100];
+  #ifdef __DEBUG__
   sprintf(ret,"currentStep:%d,gotostep:%d",_currentStep,_goToStep);
+  #endif
   Serial.println(ret);
   if(_position){
     digitalWrite(_pin,LOW);

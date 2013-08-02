@@ -11,6 +11,7 @@ void setup(){
   Serial.begin(9600);
   sCmd.addCommand("h",help);
   sCmd.addCommand("run",runMotor);
+  sCmd.addCommand("interval",setInterval);
   sCmd.setDefaultHandler(unrecognized); 
   motorManager.add(new TroyMotor(13));
   //motorManager.add(new TroyMotor(12));
@@ -44,17 +45,27 @@ void runMotor(){
   }
   motorStep =atol(stepChar);
   motorManager.goToStep(motorIndex,motorStep);
-  char ret[100];
-//  sprintf(ret,"motor %s go to Step %s",indexChar,stepChar);
-  sprintf(ret,"motor %d go to Step %d",motorIndex,motorStep);
-  Serial.println(ret);
+  char str[100];
+  //  sprintf(ret,"motor %s go to Step %s",indexChar,stepChar);
+  sprintf(str,"motor %d go to Step %d",motorIndex,motorStep);
+  Serial.println(str);
 
+}
 
+void setInterval(){
+  char *intervalChar;
+  intervalChar= sCmd.next();
+ 
+  char str[100];
+  sprintf(str,"change interval from %d to %d",motorManager.getInterval(),atol(intervalChar));
+   motorManager.interval(atol(intervalChar));
+  Serial.println(str);
 }
 
 // This gets set as the default handler, and gets called when no other command matches.
 void unrecognized(const char *command) {
   Serial.println("What?");
 }
+
 
 

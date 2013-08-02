@@ -7,6 +7,7 @@ TroyMotorManager::TroyMotorManager(int motorCount){
   _interval=20;
   _motorStatus = new int[motorCount];
   prevMillis=0;
+  _isReset=false;
 }
 void TroyMotorManager::add(TroyMotor* motor){
   _motorPtr++;
@@ -31,12 +32,19 @@ void TroyMotorManager::run(){
   }
 
 }
+void TroyMotorManager::interval(int interval){
+  _interval=interval;
+}
+
 
 void TroyMotorManager::goToStep(int index,int step){
   _motors[index]->goToStep(step);
   _motors[index]->setStatus(1);
 }
 
+int TroyMotorManager::getInterval(){
+  return _interval;
+}
 
 void TroyMotorManager::loopForever(){
   for(int i=0;i<=_motorPtr;i++){
@@ -46,6 +54,7 @@ void TroyMotorManager::loopForever(){
 
 
 }
+
 
 
 
