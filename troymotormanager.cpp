@@ -4,7 +4,7 @@ TroyMotorManager::TroyMotorManager(int motorCount){
   _motors = new TroyMotor*[motorCount];
   _motorCount=motorCount;
   _motorPtr=-1;
-  _interval=40;
+  _interval=20;
   _motorStatus = new int[motorCount];
   prevMillis=0;
 }

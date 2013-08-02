@@ -13,9 +13,10 @@ public:
   int getStatus();
   void setStatus(int);
 private:
-  int _pin,_currentStep,_goToSTep;
+  int _pin,_currentStep,_goToStep;
   int _status; // 0-> stop // 1->running
   boolean _position; //false=>LOW  , false=>HIGH
+  int _counter;
 
 
 
