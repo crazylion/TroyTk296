@@ -1,18 +1,38 @@
 
 #include "troymotor.h"
 
-TroyMotor::TroyMotor(int pin){
-  pinMode(pin,OUTPUT);
-  _pin=pin;
+
+TroyMotor::TroyMotor(int pin1,int pin2){
+  init(pin1,pin2);
+}
+
+void TroyMotor::init(int pin1,int pin2){
+
+  _pin=pin1;
+  _pin2=0;
   _status=0;
   _currentStep=0;
   _position=false;
   _counter=0;
   _isReset=true;
+  _direction=1;
+  pinMode(pin1,OUTPUT);
+
+  _pin2=pin2;
+  pinMode(pin2,OUTPUT);
+
 }
 
 void TroyMotor::goToStep(int stepCount){
   _goToStep=stepCount;
+  if(stepCount>0){
+    _direction=1;
+  }
+  else{
+    _direction=-1;
+  }
+  Serial.println("direction=");
+  Serial.println(_direction);
 }
 
 void TroyMotor::setStatus(int status){
@@ -31,11 +51,10 @@ void TroyMotor::singleRun(){
 
 void TroyMotor::step(){
   if(_counter==3){
-    _currentStep++;
+    _currentStep+=_direction;
     _counter=0;
   }
-  if(_currentStep>=_goToStep){
-    _currentStep=0;
+  if(_currentStep==_goToStep){
     _status=0;
     _counter=0;
     return;
@@ -47,12 +66,12 @@ void TroyMotor::step(){
 #endif
 
   if(_position){
-    digitalWrite(_pin,LOW);
+    low();
     _position=false;
     _counter++;
   }
   else{
-    digitalWrite(_pin,HIGH);
+    high();
     _position=true;
     _counter++;
   }
@@ -71,20 +90,34 @@ void TroyMotor::run(){
 }
 
 void TroyMotor::high(){
-  digitalWrite(_pin,HIGH);
+  if(_direction>0){
+    digitalWrite(_pin,HIGH);
+  }
+  else{
+    digitalWrite(_pin2,HIGH);
+  }
+
 }
 void TroyMotor::low(){
-  digitalWrite(_pin,LOW);
+  if(_direction>0){
+    digitalWrite(_pin,LOW);
+  }
+  else{
+    digitalWrite(_pin2,LOW);
+  }
 }
 void TroyMotor::reseting(){
   int val = analogRead(5);
-  Serial.println(val);  
   if(val==0){
+    Serial.print("reset step");
+    Serial.println(_currentStep);
+
     _isReset=true;
     _currentStep=0;
     _position=false;
     _counter=0;
     _status=0;
+
   }
   else{
     step();
@@ -96,6 +129,8 @@ void TroyMotor::reset(){
   _status=1;
   _goToStep=3000; // give   hung steps
 }
+
+
 
 
 

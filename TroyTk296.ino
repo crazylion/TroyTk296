@@ -6,7 +6,7 @@
 #include "troymotormanager.h"
 SerialCommand sCmd;  
 TroyMotorManager  motorManager(3);
-TroyMotor motor(13);
+TroyMotor motor(13,12);
 void setup(){
   Serial.begin(9600);
   sCmd.addCommand("h",help);
@@ -14,7 +14,7 @@ void setup(){
   sCmd.addCommand("interval",setInterval);
   sCmd.addCommand("reset",resetMotor);
   sCmd.setDefaultHandler(unrecognized); 
-  motorManager.add(new TroyMotor(13));
+  motorManager.add(new TroyMotor(13,12));
   //motorManager.add(new TroyMotor(12));
   //motorManager.add(new TroyMotor(11));
   //motorManager.add(new TroyMotor(13));
