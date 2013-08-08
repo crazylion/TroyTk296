@@ -1,6 +1,9 @@
 #ifndef TroyMotor_h
 #define TroyMotor_h
 #include "Arduino.h"
+
+
+
 class TroyMotor{
 public:
   TroyMotor(int,int);
@@ -10,6 +13,8 @@ public:
   void singleRun();
   void run();
   void goToStep(int);
+  void pushToStepQueue(int);
+  int  popToStepQueue();
   int getStatus();
   void setStatus(int);
   void reset();
@@ -22,7 +27,9 @@ private:
   void reseting();  //run reseting
   void step(); 
   void init(int,int);
-
+  int* _gotoArray;
+  int _queueTail;
+  int _queueSize;
 
 };
 #endif

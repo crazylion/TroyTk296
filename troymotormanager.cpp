@@ -38,8 +38,11 @@ void TroyMotorManager::interval(int interval){
 
 
 void TroyMotorManager::goToStep(int index,int step){
-  _motors[index]->goToStep(step);
-  _motors[index]->setStatus(1);
+  _motors[index]->pushToStepQueue(step);
+//  if(_motors[index]->getStatus()==0){
+//  _motors[index]->setStatus(1);  
+//  }
+
 }
 
 int TroyMotorManager::getInterval(){
