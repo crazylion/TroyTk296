@@ -1,7 +1,7 @@
 
 #include "troymotor.h"
 const int emptyQueue =-32767;
-
+#define __DEBUG__
 TroyMotor::TroyMotor(int pin1,int pin2){
   init(pin1,pin2);
 }
@@ -152,6 +152,7 @@ void TroyMotor::reseting(){
 
     _isReset=true;
     _currentStep=0;
+    _goToStep=0;
     _position=false;
     _counter=0;
     _status=0;
